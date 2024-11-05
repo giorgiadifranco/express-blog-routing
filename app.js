@@ -1,6 +1,6 @@
 const express = require ('express');
 const app = express()
-const postsRicette = require('./db/db.js')
+//const postsRicette = require('./db/db.js')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT
@@ -18,8 +18,23 @@ app.get('/',(req, res)=>{
 // seconda rotta -- response con formato json
 const posts = require ('./db/db.js')
 app.get('/posts', (req, res)=>{
-    res.json({
+    res.status(200).json({
         data: posts,
         counter: posts.length
     })
+})
+
+
+app.get('/posts/:slug', (req, res)=>{
+
+    
+    const post = posts.find( post => post.slug === req.params.slug)
+    console.log(post)
+
+    //const params = req.params
+    //console.log(params);
+    res.json({
+        data : post
+    })
+    
 })
